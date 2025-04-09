@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.test.client.RequestFactory import generic
+
 from django.urls import reverse_lazy
+from django.views import generic
 
 from .models import Task, Tag
 
@@ -30,7 +31,7 @@ def index(request):
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     context_object_name = 'task_list'
-    template_name = 'todo/task_list.html'
+    template_name = 'todo/task-list.html'
     paginate_by = 5
 
     def get_queryset(self):
@@ -74,6 +75,8 @@ class TagDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Tag
     template_name = 'todo/confirm_delete_tag.html'
     success_url = reverse_lazy('tag_list')
+
+
 
 
 @login_required
